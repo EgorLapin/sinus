@@ -9,6 +9,15 @@
 
 ## Сборка
 
+# Для double
+```bash
+mkdir build
+cd build
+cmake -DUSE_DOUBLE=ON ..
+cmake --build .
+```
+
+# Для float
 ```bash
 mkdir build
 cd build
@@ -21,11 +30,6 @@ cmake --build .
 После сборки запускаем программу:
 ```bush
 Debug/sin_array.exe
-```
-При запуске программа предлагает выбрать тип массива:
-
-```bash
-Выберите тип массива: f (float) или d (double)
 ```
 
 ## Результаты
