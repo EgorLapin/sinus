@@ -2,9 +2,16 @@
 #include <cmath>
 #include <memory>
 
-const int SIZE = 10000000;
+const int SIZE = 10'000'000;
+
 template <typename T>
-constexpr T PI_T = static_cast<T>(3.1415926536);
+constexpr T PI_T = static_cast<T>(3.14159265358979323846);
+
+#ifndef USE_DOUBLE
+using value_t = float;
+#else
+using value_t = double;
+#endif
 
 template <typename T>
 T fill_and_sum(int size)
@@ -14,7 +21,7 @@ T fill_and_sum(int size)
     T sum = 0;
     for (int i = 0; i < size; i++)
     {
-        T arg = static_cast<T>(2 * PI_T<T> * i / size);
+        T arg = static_cast<T>(2) * PI_T<T> * static_cast<T>(i) / static_cast<T>(size);
         arr[i] = std::sin(arg);
         sum += arr[i];
     }
@@ -23,28 +30,15 @@ T fill_and_sum(int size)
 
 int main()
 {
-    char df;
-    std::cout << "Choose type: f (float) or d (double)\n";
-    std::cin >> df;
+#ifdef USE_DOUBLE
+    std::cout << "Array type: double\n";
+#else
+    std::cout << "Array type: float\n";
+#endif
 
-    while (df != 'f' && df != 'd')
-    {
-        std::cout << "Enter f or d\n";
-        std::cin >> df;
-    }
+    value_t sum = fill_and_sum<value_t>(SIZE);
 
-    if (df == 'f')
-    {
-        float sum = fill_and_sum<float>(SIZE);
-        std::cout << "Array type: float\n";
-        std::cout << "Sum: " << sum << '\n';
-    }
-    else
-    {
-        double sum = fill_and_sum<double>(SIZE);
-        std::cout << "Array type: double\n";
-        std::cout << "Sum: " << sum << '\n';
-    }
+    std::cout << "Sum: " << sum << '\n';
 
     return 0;
 }
